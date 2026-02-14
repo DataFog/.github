@@ -1,22 +1,39 @@
-Welcome to the DataFog GitHub repository! DataFog is an open-source platform designed to help developers scan, redact, and anonymize sensitive information in their files, ensuring compliance with privacy regulations. Our mission is to empower organizations to protect their data while maintaining operational efficiency.
+# DataFog
 
-### **About DataFog**
+**Open-source PII detection for AI agents.** Scan, redact, and guard sensitive data — locally, in milliseconds.
 
-DataFog provides a comprehensive suite of tools for managing sensitive data. With our improved Optical Character Recognition (OCR) and Personally Identifiable Information (PII) detection capabilities, you can seamlessly integrate data protection into your workflows. Our platform is widely adopted by developers who prioritize data security and privacy.
+```python
+from datafog import sanitize
 
-### **Key Features**
+sanitize("Call Sarah Chen at 415-555-0142, SSN 234-56-7890")
+# → "Call [PERSON_1] at [PHONE_1], SSN [SSN_1]"
+```
 
-- **Enhanced OCR and PII Detection:** Leverage advanced algorithms to accurately identify and process sensitive information.
-- **Redaction and Anonymization:** Utilize customizable tools to redact and anonymize data, ensuring it remains secure and compliant with privacy standards.
-- **Open-Source Flexibility:** As an open-source platform, DataFog allows you to tailor solutions to fit your specific needs, facilitating innovation and collaboration.
+## Projects
 
-### **Getting Started**
+### 🔒 [datafog-python](https://github.com/DataFog/datafog-python) — The core SDK
+PII detection and redaction via regex + NLP cascade. One function call. <2MB core install. 190x faster than spaCy for structured PII.
 
-To begin using DataFog, explore our comprehensive documentation which provides detailed guidance on installation, configuration, and usage. Whether you're deploying DataFog as a standalone service or integrating it into your existing DevSecOps pipeline, our resources are designed to support you every step of the way.
+`pip install datafog`
 
-### **Community and Support**
+### 🔌 [datafog-mcp](https://github.com/DataFog/datafog-mcp) — MCP privacy proxy *(coming soon)*
+Add PII detection to any MCP server with one config change. Wraps Postgres, filesystem, Slack, and other MCP servers — intercepts tool responses before PII enters the agent's context window.
 
-Join our growing community of developers and contribute to the evolution of DataFog. We welcome feedback, feature requests, and contributions to enhance the platform further. For support, please refer to our documentation or reach out via our community forums.
+`uvx datafog-mcp proxy --wrap <your-mcp-server>`
 
-Thank you for choosing DataFog as your partner in data security. We look forward to seeing the innovative solutions you'll create with our platform!
+### 🧪 [datafog-core](https://github.com/DataFog/datafog-core) — Rust engine *(in development)*
+High-performance detection core in Rust. Will power both the Python SDK (via PyO3) and native integrations.
 
+## Use cases
+
+**Agent guardrails** — Wrap LLM calls with `scan_prompt()` / `filter_output()` to catch PII before it enters or leaves your agent.
+
+**MCP privacy layer** — Proxy any MCP server so tool responses are automatically scanned. Your agent reasons over `[PERSON_1]` instead of real names.
+
+**CI/CD scanning** — `datafog scan ./data` catches PII in test fixtures, logs, and configs before they ship.
+
+**RAG sanitization** — Scrub retrieved chunks before injecting into prompts.
+
+## Links
+
+🌐 [datafog.ai](https://datafog.ai) · 📦 [PyPI](https://pypi.org/project/datafog/) · 💬 [Discord](https://discord.gg/YOUR_INVITE) · 𝕏 [@datafoginc](https://twitter.com/datafoginc)
