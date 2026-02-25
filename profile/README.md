@@ -1,39 +1,43 @@
 # DataFog
 
-**Open-source PII detection for AI agents.** Scan, redact, and guard sensitive data — locally, in milliseconds.
+**Runtime data governance for AI agents and developer tooling.**
+
+DataFog runs a policy-enforced loop on sensitive payloads as they move through commands, files, and tool calls:
+
+- **detect** sensitive entities
+- **decide** what policy says (`allow`, `transform`, `allow_with_redaction`, `deny`)
+- **enforce** before the action executes
+
+It is the data firewall for your local developer + agent workflows.
+
+```bash
+# Drop DataFog into your PATH with a policy gate wrapper
+datafog-shim hooks install --target /usr/bin/git git
+```
 
 ```python
-from datafog import sanitize
-
-sanitize("Call Sarah Chen at 415-555-0142, SSN 234-56-7890")
-# → "Call [PERSON_1] at [PHONE_1], SSN [SSN_1]"
+from datafog import scan
+scan("Call Sarah Chen at 415-555-0142, SSN 234-56-7890")
+# -> [{"entity_type": "NAME", "value": "Sarah Chen", ...}, ...]
 ```
 
 ## Projects
 
-### 🔒 [datafog-python](https://github.com/DataFog/datafog-python) — The core SDK
-PII detection and redaction via regex + NLP cascade. One function call. <2MB core install. 190x faster than spaCy for structured PII.
+### 🔌 [datafog](https://github.com/DataFog/datafog) — Runtime policy engine + policy gate
+Process-boundary enforcement with scan/decide/transform APIs, receipts, and adapter-aware policy matching.
 
-`pip install datafog`
+### 🐍 [datafog-python](https://github.com/DataFog/datafog-python) — Python SDK
+SDK + CLI bindings for integrating DataFog policies into agent and app pipelines.
 
-### 🔌 [datafog-mcp](https://github.com/DataFog/datafog-mcp) — MCP privacy proxy *(coming soon)*
-Add PII detection to any MCP server with one config change. Wraps Postgres, filesystem, Slack, and other MCP servers — intercepts tool responses before PII enters the agent's context window.
-
-`uvx datafog-mcp proxy --wrap <your-mcp-server>`
-
-### 🧪 [datafog-core](https://github.com/DataFog/datafog-core) — Rust engine *(in development)*
-High-performance detection core in Rust. Will power both the Python SDK (via PyO3) and native integrations.
+### 🧩 [datafog-mcp](https://github.com/DataFog/datafog-mcp) — MCP privacy + policy proxy *(coming soon)*
+Integrate policy-aware interception for MCP tool responses, so sensitive values are governed before they reach context.
 
 ## Use cases
 
-**Agent guardrails** — Wrap LLM calls with `scan_prompt()` / `filter_output()` to catch PII before it enters or leaves your agent.
-
-**MCP privacy layer** — Proxy any MCP server so tool responses are automatically scanned. Your agent reasons over `[PERSON_1]` instead of real names.
-
-**CI/CD scanning** — `datafog scan ./data` catches PII in test fixtures, logs, and configs before they ship.
-
-**RAG sanitization** — Scrub retrieved chunks before injecting into prompts.
+- **Developer- and AI-tool guardrails** — enforce policy before shell/file/API actions execute.
+- **Runtime DLP for agents** — treat policy as code, with decision receipts and auditable logs.
+- **CI/CD and compliance checks** — scan artifacts and enforce data handling controls in workflows.
 
 ## Links
 
-🌐 [datafog.ai](https://datafog.ai) · 📦 [PyPI](https://pypi.org/project/datafog/) · 💬 [Discord](https://discord.gg/YOUR_INVITE) · 𝕏 [@datafoginc](https://twitter.com/datafoginc)
+🌐 [datafog.ai](https://datafog.ai) · 📦 [PyPI](https://pypi.org/project/datafog/) · 𝕏 [@datafoginc](https://twitter.com/datafoginc)
