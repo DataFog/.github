@@ -1,67 +1,63 @@
 # DataFog
 
-**The offline PII firewall for AI agents and LLM apps.**
+**Local PII protection for AI applications.**
 
-Agents move sensitive data through prompts, tool calls, files, and gateways
-all day. DataFog catches PII at the boundary — before it leaves the machine —
-running a simple loop on every payload:
+DataFog helps developers detect sensitive information in text and structured
+records, then choose how to protect it before passing it to a model, a log,
+or another system.
 
-- **detect** sensitive entities locally (regex-first, microseconds per scan,
-  zero network calls, one dependency)
-- **decide** what policy says (allow, redact, block)
-- **enforce** before the action executes
+**Start with [DataFog Core](https://github.com/DataFog/datafog-core)** — our Rust
+engine with SDKs for Python, Node.js, and browsers. Redact, mask, or remove
+sensitive values across runtimes. Use application-supplied providers for
+pseudonymization and reversible tokenization in Rust, Python, and Node.js.
 
-No sidecar services, no cloud API that sees your data. The only PII layer in
-the agent ecosystem where analysis never leaves your machine.
+**[Get started](https://docs.datafog.ai/get-started/quickstart) ·
+[Documentation](https://docs.datafog.ai) ·
+[Try the demo](https://datafog.ai/#demo)**
 
-## Get protected in 60 seconds
+## Choose your starting point
 
-**Python:**
+| Repository | Role |
+| --- | --- |
+| **[datafog-core](https://github.com/DataFog/datafog-core)** | Recommended starting point for new applications. Shared detection and transformation engine, with Rust, Python, Node.js, and browser SDKs. |
+| [datafog-python](https://github.com/DataFog/datafog-python) | Established Python package, including the Claude Code hook and LiteLLM guardrail adapter. Moving to Core? Follow the [migration guide](https://docs.datafog.ai/guides/migrating-from-datafog-python). |
+| [datafog-claude-plugin](https://github.com/DataFog/datafog-claude-plugin) | Claude Code integration, with its own setup and release path. |
+| [fogclaw](https://github.com/DataFog/fogclaw) | OpenClaw integration for PII detection and redaction. |
 
-```python
-# pip install datafog
-import datafog
-print(datafog.redact("email me at jane.doe@example.com").redacted_text)
-# email me at [EMAIL_1]
-```
+Core is a separate package and API from the established `datafog` Python
+library. Existing integrations have their own capabilities and release paths;
+Core adoption is a separate next step.
 
-**Claude Code** — firewall every agent tool call:
+## Build with Core
 
-```
-/plugin marketplace add DataFog/datafog-claude-plugin
-/plugin install datafog@datafog
-```
+- **Detect:** scan text and parsed JSON records, including supported person-name
+  fields, with local built-in detectors.
+- **Transform:** redact, mask, remove, pseudonymize, or tokenize selected values.
+  Select entity types, apply per-entity rules, and exempt approved values.
+- **Restore:** restore provider-issued tokens under an exact request scope.
+  Your provider owns storage and authorization.
 
-**LiteLLM gateway** — redact requests to any provider (~31µs per request):
+Browser SDKs support detection and stateless transformations. Provider-backed
+pseudonymization, tokenization, and restoration are available in Rust, Python,
+and Node.js. See the [SDK installation guide](https://docs.datafog.ai/get-started/installation)
+and [transformation guide](https://docs.datafog.ai/concepts/privacy-transformations).
 
-```yaml
-guardrails:
-  - guardrail_name: "datafog-pii"
-    litellm_params:
-      guardrail: datafog.integrations.litellm_guardrail.DataFogGuardrail
-      mode: "pre_call"
-      default_on: true
-```
+Core supplies detection and transformation. Your application or integration
+chooses where to invoke it and how to enforce policy.
 
-## Projects
+## Where we’re going
 
-| Project | What it is |
-|---|---|
-| [datafog-python](https://github.com/DataFog/datafog-python) | The engine: PII detection, redaction, and agent guardrails. Ships the Claude Code hook and LiteLLM guardrail. |
-| [datafog-claude-plugin](https://github.com/DataFog/datafog-claude-plugin) | One-command Claude Code plugin wrapping the hook. |
-| [fogclaw](https://github.com/DataFog/fogclaw) | OpenClaw plugin for PII detection and redaction. |
-| [datafog](https://github.com/DataFog/datafog) | Runtime policy engine and policy gate: scan/decide/transform APIs with auditable decision receipts. |
-| [datafog-mcp](https://github.com/DataFog/datafog-mcp) | MCP privacy proxy — govern tool responses before they reach model context. *(coming soon)* |
+One shared privacy engine across more application, agent, and gateway workflows.
+Core owns detection and transformation; integrations connect that behavior to
+the places data moves, including workflow-specific interception and enforcement.
 
-## Honest scope
-
-DataFog is a seatbelt against accidental leakage — the pasted stack trace
-that ends up in a committed test fixture, the customer record that drifts
-into a GitHub issue. It is not armor against deliberate exfiltration or
-prompt injection, and inbound PII you hand an agent directly should be
-redacted before sharing (`datafog` CLI does that too). We document the
-limitations as carefully as the features.
+Follow the [Core roadmap](https://github.com/DataFog/datafog-core/blob/main/docs/privacy-operations-roadmap.md)
+for implementation status and the [release notes](https://docs.datafog.ai/releases/0-3-0)
+for shipped capabilities.
 
 ## Links
 
-[datafog.ai](https://datafog.ai) · [PyPI](https://pypi.org/project/datafog/) · [Discord](https://discord.gg/bzDth394R4) · [Changelog](https://github.com/DataFog/datafog-python/blob/main/CHANGELOG.MD)
+[Website](https://datafog.ai) · [Documentation](https://docs.datafog.ai) ·
+[Installation](https://docs.datafog.ai/get-started/installation) ·
+[Contributing](https://docs.datafog.ai/development) ·
+[Discord](https://discord.gg/bzDth394R4)
