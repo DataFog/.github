@@ -1,24 +1,44 @@
-# DataFog
+<p align="center">
+  <a href="https://datafog.ai"><img src="https://raw.githubusercontent.com/DataFog/datafog-mcp/main/docs/assets/datafog-icon.svg" width="72" height="72" alt="DataFog"></a>
+</p>
 
-**Local PII protection for AI applications.**
+<h1 align="center">DataFog</h1>
 
-DataFog helps developers detect sensitive information in text and structured
-records, then choose how to protect it before passing it to a model, a log,
-or another system.
+<p align="center"><strong>Keep sensitive data out of AI workflows.</strong></p>
 
-**Start with [DataFog Core](https://github.com/DataFog/datafog-core)** — our Rust
-engine with SDKs for Python, Node.js, and browsers. Redact, mask, or remove
-sensitive values across runtimes. Use application-supplied providers for
-pseudonymization and reversible tokenization in Rust, Python, and Node.js.
+<p align="center">
+  <a href="https://datafog.ai">Website</a> ·
+  <a href="https://docs.datafog.ai">Documentation</a> ·
+  <a href="https://github.com/DataFog/datafog-mcp">MCP server</a> ·
+  <a href="https://github.com/DataFog/datafog-core">Core engine</a>
+</p>
 
-**[Get started](https://docs.datafog.ai/get-started/quickstart) ·
-[Documentation](https://docs.datafog.ai) ·
-[Try the demo](https://datafog.ai/#demo)**
+DataFog builds open-source tools for local PII detection and privacy transformations.
+
+- **Use it with Claude Code:** [DataFog MCP](https://github.com/DataFog/datafog-mcp)
+  scans local files and creates redacted, masked, or cleaned copies. The original
+  stays unchanged. Tool responses report counts, locations, and copy paths without
+  returning file contents or matched values.
+- **Build it into your application:** [DataFog Core](https://github.com/DataFog/datafog-core)
+  provides the Rust engine and SDKs for Python, Node.js, and browsers.
+
+## Start with a customer CSV
+
+Have a customer export with emails and phone numbers? Ask Claude Code to check it,
+then create a copy with those fields redacted before analysis. Detection and
+transformation run locally.
+
+![Claude Code creates a redacted customer CSV with DataFog MCP.](https://raw.githubusercontent.com/DataFog/datafog-mcp/main/docs/demo/transform.gif)
+
+**[Install DataFog MCP](https://github.com/DataFog/datafog-mcp#quickstart) ·
+[Try the sample CSV](https://github.com/DataFog/datafog-mcp/blob/main/docs/demo/customers.csv) ·
+[Privacy boundaries](https://github.com/DataFog/datafog-mcp/blob/main/docs/privacy.md)**
 
 ## Choose your starting point
 
 | Repository | Role |
 | --- | --- |
+| **[datafog-mcp](https://github.com/DataFog/datafog-mcp)** | Local file scanning and redacted copies for AI agents. Stable v1.0.0, tested with Claude Code. |
 | **[datafog-core](https://github.com/DataFog/datafog-core)** | Recommended starting point for new applications. Shared detection and transformation engine, with Rust, Python, Node.js, and browser SDKs. |
 | [datafog-python](https://github.com/DataFog/datafog-python) | Established Python package, including the Claude Code hook and LiteLLM guardrail adapter. Moving to Core? Follow the [migration guide](https://docs.datafog.ai/guides/migrating-from-datafog-python). |
 | [datafog-claude-plugin](https://github.com/DataFog/datafog-claude-plugin) | Claude Code integration, with its own setup and release path. |
@@ -52,7 +72,7 @@ Core owns detection and transformation; integrations connect that behavior to
 the places data moves, including workflow-specific interception and enforcement.
 
 Follow the [Core roadmap](https://github.com/DataFog/datafog-core/blob/main/docs/privacy-operations-roadmap.md)
-for implementation status and the [release notes](https://docs.datafog.ai/releases/0-3-0)
+for implementation status and the [Core releases](https://github.com/DataFog/datafog-core/releases)
 for shipped capabilities.
 
 ## Links
