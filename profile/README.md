@@ -1,10 +1,8 @@
-<p align="center">
-  <a href="https://datafog.ai"><img src="https://raw.githubusercontent.com/DataFog/datafog-mcp/main/docs/assets/datafog-icon.svg" width="72" height="72" alt="DataFog"></a>
-</p>
-
-<h1 align="center">DataFog</h1>
-
-<p align="center"><strong>Keep sensitive data out of AI workflows.</strong></p>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/DataFog/.github/main/profile/banner-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/DataFog/.github/main/profile/banner-light.png">
+  <img alt="datafog: Keep PII out of your LLM calls." src="https://raw.githubusercontent.com/DataFog/.github/main/profile/banner-light.png" width="100%">
+</picture>
 
 <p align="center">
   <a href="https://datafog.ai">Website</a> ·
@@ -13,13 +11,15 @@
   <a href="https://github.com/DataFog/datafog-core">Core engine</a>
 </p>
 
-DataFog builds open-source tools for local PII detection and privacy transformations.
+**datafog** is the embeddable PII engine. Detect personal data and secrets inside
+your own process, in Rust, Python, Node or the browser, before they reach your
+model. No sidecar, no network call to scan.
 
-- **Use it with Claude Code:** [DataFog MCP](https://github.com/DataFog/datafog-mcp)
+- **Use it with Claude Code:** [datafog MCP](https://github.com/DataFog/datafog-mcp)
   scans local files and creates redacted, masked, or cleaned copies. The original
   stays unchanged. Tool responses report counts, locations, and copy paths without
   returning file contents or matched values.
-- **Build it into your application:** [DataFog Core](https://github.com/DataFog/datafog-core)
+- **Build it into your application:** [datafog core](https://github.com/DataFog/datafog-core)
   provides the Rust engine and SDKs for Python, Node.js, and browsers.
 
 ## Start with a customer CSV
@@ -28,9 +28,9 @@ Have a customer export with emails and phone numbers? Ask Claude Code to check i
 then create a copy with those fields redacted before analysis. Detection and
 transformation run locally.
 
-![Claude Code creates a redacted customer CSV with DataFog MCP.](https://raw.githubusercontent.com/DataFog/datafog-mcp/main/docs/demo/transform.gif)
+![Claude Code creates a redacted customer CSV with datafog MCP.](https://raw.githubusercontent.com/DataFog/datafog-mcp/main/docs/demo/transform.gif)
 
-**[Install DataFog MCP](https://github.com/DataFog/datafog-mcp#quickstart) ·
+**[Install datafog MCP](https://github.com/DataFog/datafog-mcp#quickstart) ·
 [Try the sample CSV](https://github.com/DataFog/datafog-mcp/blob/main/docs/demo/customers.csv) ·
 [Privacy boundaries](https://github.com/DataFog/datafog-mcp/blob/main/docs/privacy.md)**
 
